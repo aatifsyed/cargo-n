@@ -9,6 +9,8 @@ edition = "2021"
 clap = { version = "4.1.8", features = ["derive"] }
 clap-verbosity-flag = "2.0.0"
 color-eyre = "0.6.2"
+itertools = "0.10.5"
 log = "0.4.17"
+tap = "1.0.1"
 tracing = "0.1.37"
 tracing-subscriber = { version = "0.3.16", features = ["fmt", "env-filter"] }
