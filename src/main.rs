@@ -10,7 +10,13 @@ use tap::{Pipe as _, Tap as _};
 use tracing::{debug, info};
 
 #[derive(Debug, clap::Parser)]
-#[clap(about, version)]
+#[command(name = "cargo", bin_name = "cargo")]
+enum ArgsWrapper {
+    #[command(about, version)]
+    N(Args),
+}
+
+#[derive(Debug, clap::Parser)]
 struct Args {
     #[command(flatten)]
     verbose: clap_verbosity_flag::Verbosity<clap_verbosity_flag::InfoLevel>,
@@ -32,7 +38,7 @@ fn args() {
 }
 
 fn main() -> color_eyre::Result<()> {
-    let args = Args::parse();
+    let ArgsWrapper::N(args) = ArgsWrapper::parse();
     let env_filter = tracing_subscriber::EnvFilter::builder()
         .with_default_directive({
             use tracing_subscriber::filter::LevelFilter;
@@ -84,6 +90,7 @@ fn main() -> color_eyre::Result<()> {
         ],
         path.as_path(),
     )?;
+    run_cmd("git", ["tag", "root"], path.as_path())?;
     run_cmd("git", ["add", "."], path.as_path())?;
     run_cmd(
         "git",
