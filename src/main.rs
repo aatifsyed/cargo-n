@@ -102,15 +102,13 @@ fn main() -> color_eyre::Result<()> {
         path.as_path(),
     )?;
 
-    if !lib {
-        run_cmd("cargo", ["build"], path.as_path())?;
-        run_cmd("git", ["add", "."], path.as_path())?;
-        run_cmd(
-            "git",
-            ["commit", "--message", "bootstrap: initial build"],
-            path.as_path(),
-        )?;
-    }
+    run_cmd("cargo", ["build"], path.as_path())?;
+    run_cmd("git", ["add", "."], path.as_path())?;
+    run_cmd(
+        "git",
+        ["commit", "--message", "bootstrap: initial build"],
+        path.as_path(),
+    )?;
 
     Ok(())
 }
